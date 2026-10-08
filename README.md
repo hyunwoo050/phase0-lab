@@ -103,4 +103,20 @@
     - git push origin <name> : 로컬 커밋을 원격 저장소(GitHub)에 브랜치 전송
 
   - 충돌(Conflict) 해결 프로세스
+    - git switch main : 'main' branch로 이동
+    - git merge <name> : <name> branch 의 변경을 현재 branch 로 합침
+    - 코드 내 충돌 표시 수동 확인
+      - vim 에디터로 충돌이 난 파일을 열어 확인
+      - <<<<<<< HEAD
+        현재 브랜치(main)의 코드
+        =======
+        합치려는 브랜치(<name>)의 코드
+        >>>>>>> <name>
+        ...
+    - 코드 조율 및 저장 (:wq)
+    - git add <file> : 충돌 해결 상태 반영
+    - git commit -m "resolve conflict" : 충돌 해결을 마무리하는 머지 커밋 완료
+    - git log --oneline : 한 줄 로그를 통해 머지 커밋 확인
+
+  - GitHub Pull Request (PR)
     - 
