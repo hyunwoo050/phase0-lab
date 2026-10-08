@@ -67,21 +67,21 @@
   - ps aux : 시스템에서 실행 중인 모든 프로세스 상세 출력
   - ps aux | grep top_ip.sh : 특정 프로세스의 PID(Process ID) 확인
   - top : 실시간 CPU/메모리 사용량 및 프로세스 모니터링 (종료 시 q)
-  - kill (-15) <PID> : 프로세스 정상 종료 시그널(SIGTERM) 송신
-  - kill -9 <PID> : 프로세스 강제 종료 시그널(SIGKILL) 송신
+  - kill (-15) 'PID' : 프로세스 정상 종료 시그널(SIGTERM) 송신
+  - kill -9 'PID' : 프로세스 강제 종료 시그널(SIGKILL) 송신
 
   - 백그라운드 제어 명령어
     - & : 백그라운드 작업으로 실행 (sleep 300 &)
     - jobs : 현재 터미널 창에서 백그라운드로 실행 중인 작업 목록 확인
-    - fg %<작업번호> : 백그라운드에 있는 작업을 화면 앞으로 가져오기
-    - nohup <명령어> & : SSH 접속이 끊겨도 백그라운드에서 끊기지 않게 실행 (nohup ./long_task.sh &)
+    - fg %'작업번호' : 백그라운드에 있는 작업을 화면 앞으로 가져오기
+    - nohup '명령어' & : SSH 접속이 끊겨도 백그라운드에서 끊기지 않게 실행 (nohup ./long_task.sh &)
 
 ## 5. 표준 입출력, 파이프 & 텍스트 처리
   - 표준 입력(stdin, 0), 표준 출력(stdout, 1), 표준 오류(stderr, 2)
 
   - 리다이렉션 및 파이프
-    - > : 덮어쓰기 (echo "hello" > a.txt)
-    - >> : 이어쓰기 (echo "world" >> a.txt)
+    - '>' : 덮어쓰기 (echo "hello" > a.txt)
+    - '>>' : 이어쓰기 (echo "world" >> a.txt)
     - 2> : 오류만 저장 (ls /no_such_dir 2> err.txt)
     - | : 앞 출력을 뒤 입력으로 연결 (sort ip.txt | uniq -c | sort -rn | head -3)
       - sort : 동일 IP를 모아주기 위해 정렬
@@ -97,26 +97,47 @@
 ## 6. Git & GitHub
   - Commit & branch Workflow
     - git init : 로컬 저장소 초기화
-    - git switch -c <name> : 새로운 브랜치 생성 후 이동
-    - gid add <file> : 작업 디렉터리의 변경 사항을 스테이징 영역에 추가
+    - git switch -c 'name' : 새로운 브랜치 생성 후 이동
+    - gid add 'file' : 작업 디렉터리의 변경 사항을 스테이징 영역에 추가
+    - git status : 변경 사항, 스테이징 된 파일 확인
     - git commit -m "message" : 커밋 생성
-    - git push origin <name> : 로컬 커밋을 원격 저장소(GitHub)에 브랜치 전송
+    - git push origin 'name' : 로컬 커밋을 원격 저장소(GitHub)에 브랜치 전송
 
   - 충돌(Conflict) 해결 프로세스
     - git switch main : 'main' branch로 이동
-    - git merge <name> : <name> branch 의 변경을 현재 branch 로 합침
+    - git pull : 원격 저장소의 변경을 로컬로 내려받아 합침
+    - git merge 'name' : 'name' branch 의 변경을 현재 branch 로 합침
     - 코드 내 충돌 표시 수동 확인
       - vim 에디터로 충돌이 난 파일을 열어 확인
-      - <<<<<<< HEAD
+        ```text
+        <<<<<<< HEAD
+        
         현재 브랜치(main)의 코드
+
         =======
-        합치려는 브랜치(<name>)의 코드
-        >>>>>>> <name>
+        
+        합치려는 브랜치('name')의 코드
+        
+        >>>>>>> 'name'
         ...
     - 코드 조율 및 저장 (:wq)
-    - git add <file> : 충돌 해결 상태 반영
+    - git add 'file' : 충돌 해결 상태 반영
     - git commit -m "resolve conflict" : 충돌 해결을 마무리하는 머지 커밋 완료
     - git log --oneline : 한 줄 로그를 통해 머지 커밋 확인
 
   - GitHub Pull Request (PR)
-    - 
+    - branch 에서 수정한 코드를 메인 저장소(main)에 합쳐달라고(merge) 요청(request)하는 협업 절차
+    - PR 작업 흐름
+      - 로컬 branch 생성 및 작업 완료
+        ```bash
+        git switch -c feature/top5
+        # (코드 수정 및 커밋 완료)
+        git push -u origin feature/top5
+        ...
+      - GitHub 사이트에서 PR 생성
+        - Compare & pull request 버튼 클릭
+        - base: main <- compare: feature/top5 (브랜치 방향 설정)
+        - Create pull request (변경 사항, 커밋 메시지 등록)
+      - 코드 리뷰 및 충돌(Conflict) 확인
+        - 정상 상태 : Merge pull request
+        - 충돌 상태 : 충돌 해결 프로세스 진행
