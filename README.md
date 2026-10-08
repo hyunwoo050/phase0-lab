@@ -13,7 +13,7 @@
       - git : GitHub 연동 소스코드 관리 도구
       - openssh-server : SSH(Secure Shell) 원격 접속을 위한 서버 프로그램
       - build-essential : 기초적인 빌드 패키지 모음
-  - cat /etc/os-release | head -1 : 설치된 리눅스 버전 확인 (PRETTY_NAME="Ubuntu 26.04.1 LTS")
+  - cat /etc/os-release | head -1 : 설치된 리눅스 버전 확인 (PRETTY_NAME="Ubuntu 24.04.1 LTS")
 
   - sudo service ssh start : SSH 원격 접속 서비스 실행
   - ssh $USER@127.0.0.1 : 내 계정($USER)으로 나 자신(127.0.0.1)에게 원격 접속 시도
@@ -92,13 +92,13 @@
   - 텍스트 처리
     - grep : 줄 고르기 (grep "error" app.log)
     - sed : 글자 바꾸기 (sed "s/old/new/g" file.txt)
-    - awk : 열 단위로 자르기 (awk "{print \$1}" access.log)
+    - awk : 열 단위로 자르기 (awk '{print \$1}' access.log)
 
 ## 6. Git & GitHub
   - Commit & branch Workflow
     - git init : 로컬 저장소 초기화
     - git switch -c 'name' : 새로운 브랜치 생성 후 이동
-    - gid add 'file' : 작업 디렉터리의 변경 사항을 스테이징 영역에 추가
+    - git add 'file' : 작업 디렉터리의 변경 사항을 스테이징 영역에 추가
     - git status : 변경 사항, 스테이징 된 파일 확인
     - git commit -m "message" : 커밋 생성
     - git push origin 'name' : 로컬 커밋을 원격 저장소(GitHub)에 브랜치 전송
